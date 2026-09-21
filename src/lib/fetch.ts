@@ -1,30 +1,15 @@
 export const API_BASE_URL = process.env.API_BASE_URL?.replace(/\/+$/, "");
 
-/** A hanging upstream would otherwise hang the render itself. */
 const DEFAULT_TIMEOUT_MS = 8_000;
 
-/**
- * Applied to every request. Auth tokens belong here once the API needs them —
- * one place instead of one per call site.
- */
 function defaultHeaders(): HeadersInit {
   return { Accept: "application/json" };
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Errors                                                                    */
-/* -------------------------------------------------------------------------- */
-
-/**
- * Every failure leaves this module as an ApiError, so `error.tsx` and any
- * caller always get the same shape no matter what went wrong.
- * `status === 0` means the request never reached the server (network/timeout).
- */
 export class ApiError extends Error {
   readonly status: number;
   readonly method: string;
   readonly url: string;
-  /** Upstream response body, when it sent a readable one. */
   readonly details?: string;
 
   constructor(init: {
@@ -50,31 +35,18 @@ export class ApiError extends Error {
     return this.status === 401 || this.status === 403;
   }
 
-  /** Network failures and 5xx are worth retrying; a 400 is not. */
   get isRetryable(): boolean {
     return this.status === 0 || this.status >= 500;
   }
 }
 
-/**
- * Single funnel for failed requests. Swap the console for a real reporter
- * (Sentry, logflare, ...) and the whole app is covered.
- */
 function reportError(error: ApiError): void {
   console.error(
     `[http] ${error.method} ${error.url} -> ${error.status || "network"}: ${error.message}`,
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Cache policy                                                              */
-/* -------------------------------------------------------------------------- */
 
-/**
- * Modelled as a union on purpose: `no-store` and `revalidate` are mutually
- * exclusive in Next's fetch API, and setting both on one request silently
- * breaks caching. Separate variants let the compiler reject that mistake.
- */
 export type CachePolicy =
   | { mode: "no-store" }
   | { mode: "revalidate"; seconds: number; tags?: string[] }
@@ -93,17 +65,11 @@ function cacheInit(policy: CachePolicy): RequestInit {
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/*  URL building                                                              */
-/* -------------------------------------------------------------------------- */
 
 type QueryValue = string | number | boolean | null | undefined;
 export type Query = Record<string, QueryValue | QueryValue[]>;
 
-/**
- * Joined by hand rather than with `new URL(path, base)`, which would drop a
- * path prefix on a base like `https://host/api/v1`.
- */
+
 function buildUrl(path: string, query?: Query): string {
   const url = `${API_BASE_URL}/${path.replace(/^\/+/, "")}`;
   if (!query) return url;
@@ -121,9 +87,6 @@ function buildUrl(path: string, query?: Query): string {
   return search ? `${url}?${search}` : url;
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Core request                                                              */
-/* -------------------------------------------------------------------------- */
 
 export interface RequestOptions {
   query?: Query;
@@ -188,18 +151,21 @@ async function request<T>(
     );
   }
 
-  if (res.status === 204) return undefined as T;
+  let text: string;
+  try {
+    text = await res.text();
+  } catch {
+    return fail("Could not read the response body", res.status);
+  }
+
+  if (!text) return undefined as T;
 
   try {
-    return (await res.json()) as T;
+    return JSON.parse(text) as T;
   } catch {
     return fail("Server returned a malformed JSON body", res.status);
   }
 }
-
-/* -------------------------------------------------------------------------- */
-/*  Public client                                                             */
-/* -------------------------------------------------------------------------- */
 
 export const http = {
   get: <T>(path: string, options?: RequestOptions) =>
