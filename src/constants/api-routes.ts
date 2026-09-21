@@ -4,6 +4,10 @@ let API_ROUTES = {
     GET_ALL_PRODUCTS: "",
     GET_PRODUCT_BY_ID: (id: string) => `${id}`,
   },
+  AUTH: {
+    root: "auth",
+    LOGIN: "login",
+  },
 };
 
 const controllersArr = Object.entries(API_ROUTES).map(
