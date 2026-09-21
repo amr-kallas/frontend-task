@@ -4,7 +4,6 @@ import { PRODUCTS_PAGE_SIZE } from "@/services/products.service";
 
 import { PRODUCT_COLUMNS } from "./products-table";
 
-/** Mirrors <ProductsTableSection>: table rows, then the summary + pagination row. */
 export function ProductsTableSkeleton() {
   return (
     <div className="space-y-4">

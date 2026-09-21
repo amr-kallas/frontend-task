@@ -15,7 +15,6 @@ export const PRODUCT_COLUMNS: TableColumn<Product>[] = [
     className: "w-16",
     cell: (product) => (
       <div className="flex size-12 items-center justify-center rounded-lg bg-white p-1 ring-1 ring-zinc-200 dark:ring-zinc-800">
-        {/* Decorative: the title next to it already names the product. */}
         <Image
           src={product.image}
           alt=""

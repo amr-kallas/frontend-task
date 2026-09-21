@@ -19,7 +19,6 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           width={400}
           height={400}
           sizes="(min-width: 768px) 400px, 80vw"
-          // The largest element on the page: fetch it as early as possible.
           preload
           className="h-72 w-auto object-contain md:h-96"
         />

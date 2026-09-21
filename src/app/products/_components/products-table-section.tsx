@@ -16,10 +16,6 @@ type ProductsTableSectionProps = {
   page: number;
 };
 
-/**
- * The async part of /products: fetches one page on the server and renders
- * it. Any fetch failure is thrown to the nearest error.tsx.
- */
 export async function ProductsTableSection({ page }: ProductsTableSectionProps) {
   const { data, pageNumber, totalPages, totalDataCount } = await getProducts({
     PageNumber: page,
@@ -34,7 +30,6 @@ export async function ProductsTableSection({ page }: ProductsTableSectionProps) 
     );
   }
 
-  // A hand-edited URL such as ?page=99.
   if (data.length === 0) {
     return (
       <EmptyState

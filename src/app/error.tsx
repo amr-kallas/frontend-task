@@ -8,7 +8,6 @@ type AppErrorProps = {
   retry: () => void;
 };
 
-/** Fallback for every route without its own error.tsx (product details, admin). */
 export default function AppError({ error, retry }: AppErrorProps) {
   return (
     <EmptyState

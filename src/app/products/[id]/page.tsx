@@ -8,18 +8,10 @@ import { getProductById } from "@/services/products.service";
 
 import { ProductDetails } from "../_components/product-details";
 
-/*
- * No loading.tsx for this route, on purpose. A loading boundary makes Next
- * stream the response, and once streaming starts the status is already 200.
- * Without it, notFound() runs before any byte is sent, so an unknown id gets
- * a real `404` from the server along with the custom not-found.tsx.
- */
-
 export async function generateMetadata({
   params,
 }: PageProps<"/products/[id]">): Promise<Metadata> {
   const { id } = await params;
-  // Same call as the page below — deduplicated by React `cache`.
   const product = await getProductById(id);
 
   if (!product) notFound();

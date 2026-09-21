@@ -12,14 +12,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/**
- * Two server-side checks guard this page:
- *   1. proxy.ts redirects before rendering when there is no valid session.
- *   2. verifySession() re-checks here, so the page is safe even if the
- *      proxy is misconfigured or bypassed.
- * Reading cookies also makes the page dynamic: it can never be cached and
- * served to someone else.
- */
 export default async function AdminPage() {
   const session = await verifySession();
 
@@ -36,7 +28,6 @@ export default async function AdminPage() {
           </>
         }
         actions={
-          // A plain form posting to a Server Action: works without client JS.
           <form action={logout}>
             <Button type="submit" variant="secondary">
               Log out

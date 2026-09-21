@@ -7,7 +7,6 @@ export function formatPrice(value: number): string {
   return priceFormatter.format(value);
 }
 
-/** Cuts `text` at a word boundary so it fits in `maxLength` characters. */
 export function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   const cut = text.slice(0, maxLength - 1);

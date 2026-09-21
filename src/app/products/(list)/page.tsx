@@ -9,13 +9,9 @@ import { ProductsTableSkeleton } from "../_components/products-table-skeleton";
 
 export const metadata: Metadata = {
   title: "Products",
-  description: "Browse the product catalog, rendered on the server on every request.",
+  description: "Browse the product catalog.",
 };
 
-/**
- * Lives in the `(list)` route group so that its loading.tsx wraps only this
- * page, not /products/[id] (see the comment in [id]/page.tsx).
- */
 export default async function ProductsPage({
   searchParams,
 }: PageProps<"/products">) {
@@ -25,8 +21,6 @@ export default async function ProductsPage({
     <>
       <ProductsPageHeader />
 
-      {/* A new key per page makes each page a fresh boundary, so the skeleton
-          shows on every page switch instead of the old rows lingering. */}
       <Suspense key={page} fallback={<ProductsTableSkeleton />}>
         <ProductsTableSection page={page} />
       </Suspense>

@@ -7,12 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const INITIAL_STATE: LoginState = {};
-
-/**
- * The only client component in the auth flow, and only for the pending state
- * and inline error. Credentials are checked and the cookie is set in the
- * `login` Server Action.
- */
+  
 export function LoginForm() {
   const [state, formAction, isPending] = useActionState(login, INITIAL_STATE);
   const errorId = state.error ? "login-error" : undefined;

@@ -1,6 +1,5 @@
 import type { Session } from "@/types/auth";
 
-// Rendered on the server, so the time zone is stated rather than guessed.
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "medium",
   timeStyle: "short",

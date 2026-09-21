@@ -4,7 +4,6 @@ import { buttonClasses } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ROUTES } from "@/constants/routes";
 
-/** Rendered with a 404 status when the page calls notFound(). */
 export default function ProductNotFound() {
   return (
     <EmptyState
