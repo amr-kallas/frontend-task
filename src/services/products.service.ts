@@ -33,14 +33,8 @@ export async function getProducts({
   };
 }
 
-function isValidProductId(id: string): boolean {
-  return /^[1-9]\d*$/.test(id);
-}
-
 export const getProductById = cache(
   async (id: string): Promise<Product | null> => {
-    if (!isValidProductId(id)) return null;
-
     try {
       const product = await http.get<Product | undefined>(
         API_ROUTES.PRODUCTS.GET_PRODUCT_BY_ID(id),

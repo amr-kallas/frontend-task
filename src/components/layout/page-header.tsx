@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 type PageHeaderProps = {
   title: string;
   description?: ReactNode;
-  /** Rendered on the right, e.g. a logout button. */
   actions?: ReactNode;
 };
 

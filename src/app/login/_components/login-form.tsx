@@ -7,11 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const INITIAL_STATE: LoginState = {};
-  
+
 export function LoginForm() {
   const [state, formAction, isPending] = useActionState(login, INITIAL_STATE);
   const errorId = state.error ? "login-error" : undefined;
-
   return (
     <form
       action={formAction}
@@ -48,7 +47,11 @@ export function LoginForm() {
       </div>
 
       {state.error && (
-        <p id="login-error" role="alert" className="text-sm text-red-600 dark:text-red-400">
+        <p
+          id="login-error"
+          role="alert"
+          className="text-sm text-red-600 dark:text-red-400"
+        >
           {state.error}
         </p>
       )}
@@ -58,8 +61,7 @@ export function LoginForm() {
       </Button>
 
       <p className="text-xs text-zinc-500">
-        FakeStoreAPI test account:{" "}
-        <code className="font-mono">mor_2314</code> /{" "}
+        FakeStoreAPI test account: <code className="font-mono">mor_2314</code> /{" "}
         <code className="font-mono">83r5^_</code>
       </p>
     </form>

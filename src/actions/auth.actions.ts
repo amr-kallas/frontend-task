@@ -18,10 +18,6 @@ export async function login(
   const username = String(formData.get("username") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
-  if (!username || !password) {
-    return { error: "Username and password are required.", username };
-  }
-
   let isValid: boolean;
   try {
     isValid = await verifyCredentials({ username, password });

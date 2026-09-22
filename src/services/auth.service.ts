@@ -11,7 +11,10 @@ export async function verifyCredentials(
     await http.post<LoginResponse>(API_ROUTES.AUTH.LOGIN, payload);
     return true;
   } catch (error) {
-    if (error instanceof ApiError && error.status === 400) {
+    if (
+      error instanceof ApiError &&
+      (error.status === 401 || error.status === 400)
+    ) {
       return false;
     }
     throw error;

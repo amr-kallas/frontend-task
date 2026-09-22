@@ -5,14 +5,11 @@ import { cn } from "@/lib/cn";
 type EmptyStateProps = {
   title: string;
   description?: ReactNode;
-  /** Actions (links / buttons) rendered under the text. */
   children?: ReactNode;
   tone?: "neutral" | "danger";
-  /** Small label above the title, e.g. "404". */
   eyebrow?: string;
 };
 
-/** Shared by not-found pages, error boundaries and empty results. */
 export function EmptyState({
   title,
   description,
@@ -33,7 +30,9 @@ export function EmptyState({
         <p
           className={cn(
             "text-sm font-semibold",
-            tone === "danger" ? "text-red-600 dark:text-red-400" : "text-zinc-500",
+            tone === "danger"
+              ? "text-red-600 dark:text-red-400"
+              : "text-zinc-500",
           )}
         >
           {eyebrow}
@@ -47,7 +46,11 @@ export function EmptyState({
           {description}
         </div>
       )}
-      {children && <div className="mt-6 flex flex-wrap justify-center gap-3">{children}</div>}
+      {children && (
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

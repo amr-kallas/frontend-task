@@ -5,11 +5,9 @@ import { cn } from "@/lib/cn";
 export { TableSkeleton } from "./table-skeleton";
 
 export type TableColumn<T> = {
-  /** Unique per table; used as the React key of the column's cells. */
   key: string;
   header: ReactNode;
   cell: (row: T) => ReactNode;
-  /** Applied to the header cell and every body cell of the column. */
   className?: string;
 };
 
@@ -17,15 +15,10 @@ type TableProps<T> = {
   columns: TableColumn<T>[];
   data: T[];
   getRowKey: (row: T) => string | number;
-  /** Read by screen readers only. */
   caption?: string;
   emptyMessage?: ReactNode;
 };
 
-/**
- * Presentational and generic: it knows nothing about products. Each page
- * describes its columns and hands over already-fetched rows.
- */
 export function Table<T>({
   columns,
   data,

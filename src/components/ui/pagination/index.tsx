@@ -4,14 +4,9 @@ import { PaginationLink } from "./pagination-link";
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
-  /** Builds the URL of a page, so the component works for any route. */
   getPageHref: (page: number) => string;
 };
 
-/**
- * Plain links, no client state: every page is a real URL (`?page=N`) that
- * the server renders, so any page can be shared or bookmarked.
- */
 export function Pagination({
   currentPage,
   totalPages,

@@ -7,7 +7,6 @@ const BASE =
   "inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-3 text-sm font-medium transition-colors";
 
 type PaginationLinkProps = {
-  /** `null` renders a disabled control (e.g. "Previous" on page 1). */
   href: string | null;
   isActive?: boolean;
   "aria-label"?: string;
@@ -24,7 +23,10 @@ export function PaginationLink({
     return (
       <span
         aria-current="page"
-        className={cn(BASE, "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900")}
+        className={cn(
+          BASE,
+          "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900",
+        )}
       >
         {children}
       </span>
@@ -35,7 +37,10 @@ export function PaginationLink({
     return (
       <span
         aria-disabled="true"
-        className={cn(BASE, "cursor-not-allowed text-zinc-400 dark:text-zinc-600")}
+        className={cn(
+          BASE,
+          "cursor-not-allowed text-zinc-400 dark:text-zinc-600",
+        )}
         {...aria}
       >
         {children}

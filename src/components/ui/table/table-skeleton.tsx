@@ -5,7 +5,6 @@ type TableSkeletonProps = {
   rows: number;
 };
 
-/** Same frame as <Table>, so swapping one for the other causes no layout shift. */
 export function TableSkeleton({ columns, rows }: TableSkeletonProps) {
   return (
     <div
